@@ -61,20 +61,12 @@ class Controlador_Ficheros:
                 completo = basePrimero + segundo
                 listaIPPrivadas.append(completo)
 
-    def escribirFicheroTarget(self,conjuntoTarget,ruta):
-        ficheroTarget = open(ruta + "/Conjunto_MAC;IP.txt",'w')
+    def toListTarget(self,conjuntoTarget):
+        ipList = list()
         for target in conjuntoTarget:
-            ficheroTarget.write(target.mac + ";" + target.ip + "\n")
-        ficheroTarget.close()
+            ipList.append(target.ip)
+        return ipList
 
-
-    def escribirIPs(self,conjuntoTarget,nombreFichero):
-        nombreFichero += "/Conjunto_IP.txt"
-        ficheroIP = open(nombreFichero,'w')
-        for target in conjuntoTarget:
-            ficheroIP.write(target.ip + "\n")
-        ficheroIP.close()
-        return nombreFichero
 
     def borrarFichero(self,rutaFichero):
         #hacer la llamada a rm -f fichero

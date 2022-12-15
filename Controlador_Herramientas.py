@@ -33,7 +33,7 @@ class Controlador_Herramientas:
         if interfaz != "-1":
             rutaFichero = rutaFicherosEntrada + "/Entrada_ettercap.txt"
             fichero = open(rutaFichero,"w")
-            proceso = subprocess.Popen(["sudo","ettercap", "-Tqz", "-s", "'s(300)lqq'", "-i", interfaz], stdout=fichero) #Se registran datos durante 5 minutos (300 segundos)
+            proceso = subprocess.Popen(["ettercap", "-Tqz", "-s", "'s(300)lqq'", "-i", interfaz], stdout=fichero) #Se registran datos durante 5 minutos (300 segundos)
             proceso.communicate()
             fichero.close()
             return rutaFichero
@@ -55,7 +55,7 @@ class Controlador_Herramientas:
         fichero = open(traza, "w")
         def kill(process): return process.kill()
 
-        proceso = subprocess.Popen(["sudo", "tcpdump", "-w", traza, "-i", interfaz])
+        proceso = subprocess.Popen(["tcpdump", "-w", traza, "-i", interfaz])
 
         my_timer = Timer(300, kill, [proceso])
 
@@ -70,7 +70,7 @@ class Controlador_Herramientas:
         proceso = subprocess.run(["whoami"], capture_output=True, text=True)
         whoami = proceso.stdout.splitlines()
 
-        proceso = subprocess.Popen(["sudo", "chown", whoami[0], traza])
+        proceso = subprocess.Popen(["chown", whoami[0], traza])
 
         #Se genera un fichero txt con las trazas unicamente de los protocolos upd y tcp, tanto con IPv4 como IPv6.
         rutaFichero = rutaFicherosEntrada + "/Entrada_tcpdump.txt"
@@ -86,17 +86,17 @@ class Controlador_Herramientas:
         ficheroInalambrico = self.analisisInalambrico(rutaFicherosEntrada=rutaFicherosEntrada)
         return [ficheroCableado,ficheroInalambrico]
         
-    def analisisDeVulnerabilidades(self,ficheroListaIPs,user,password,carpetaEntrada):
+    def analisisDeVulnerabilidades(self,ipList,user,password,carpetaEntrada):
         #Meter al usuario actual en el grupo _gvm para poder lanzar los comandos
         proceso = subprocess.run(["whoami"],capture_output=True,text=True)
         whoami = proceso.stdout.splitlines()
-        proceso = subprocess.run(["sudo", "usermod", "-a", "-G", "_gvm", whoami[0]])
+        proceso = subprocess.run(["usermod", "-a", "-G", "_gvm", whoami[0]])
         
         greenBone = GreenBone()
         #Lanzar el servicio
-        subprocess.run(["sudo", "gvm-start"],capture_output=True,text=True)
+        subprocess.run(["gvm-start"],capture_output=True,text=True)
         #Cambio de permisos del socket para que lo pueda utilizar el usuario
-        subprocess.run(["sudo", "chmod", "662", "/var/run/gvmd/gvmd.sock"])
+        #subprocess.run(["chmod", "662", "/var/run/gvmd/gvmd.sock"])
 
         #Carpeta de los scripts
         proceso = subprocess.run(["find", "/", "-name", "TFG"], capture_output=True,text=True) #FIXME "TFG" es como se llame el proyecto de git
@@ -107,15 +107,11 @@ class Controlador_Herramientas:
         #lanzar un script por cada llamada a una funcion                
         time.sleep(60) #Durmiendo el proceso para esperar a que se lance Greenbone
 
-        idTarget = greenBone.crearTargets(ficheroListaIPs,rutaScripst,user,password)
-        idTask, nombreTask = greenBone.crearTask(idTarget,rutaScripst,user,password)
-        idReport = greenBone.lanzarTask(idTask,rutaScripst,user,password)
-        rutaInforme = greenBone.descargarReporte(idReport,nombreTask,rutaScripst,user,password,carpetaEntrada) #pasarle el sitio del reporte
-        #greenBone.borrarTargets(idTargets)
+        rutaReporte = greenBone.launch(ipList,carpetaEntrada,user,password)
 
         #Para mantener la seguridad eliminamos al usuario del grupo que puede ejecutar los comandos de Greenbone
-        subprocess.run(["sudo", "gpasswd", "-d", whoami[0], "_gvm"])
+        subprocess.run(["gpasswd", "-d", whoami[0], "_gvm"])
         #Parar el servicio
-        #subprocess.run(["sudo", "gvm-stop"],capture_output=True,text=True)
+        subprocess.run(["gvm-stop"],capture_output=True,text=True)
 
-        return rutaInforme
+        return rutaReporte

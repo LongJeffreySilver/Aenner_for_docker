@@ -45,19 +45,14 @@ def main(args: Namespace) -> None:
     if ficherosEntrada[0] == "-1" and ficherosEntrada[1] == "-1":
         print("No hay ninguna interfaz de red conectada.")
         sys.exit()
-    #Para no ocupar espacio y que se acumulen siempre ficheros, se van a ir borrando que ya no se utilizan
 
+    #Create a new list with IPs for Greenbone
+    ipList = controlador_ficheros.toListTarget(conjuntoTarget,rutasCarpetas[1])# Fichero con la lista de IPs actual para Greenbone
 
-
-    #Se escribe el conjunto final en un fichero
-    controlador_ficheros.escribirFicheroTarget(conjuntoTarget,rutasCarpetas[1]) #Fichero con la vinculacion MAC;IP actual
-    ficheroListaIPs = controlador_ficheros.escribirIPs(conjuntoTarget,rutasCarpetas[1])# Fichero con la lista de IPs actual para Greenbone
-
-    user = args[1] #"admin"
+    user = args[1] 
     password = args[2] 
-    rutaInforme = controlador_herramientas.analisisDeVulnerabilidades(ficheroListaIPs,user,password,rutasCarpetas[0]) #Escribir ruta despues y devolver ruta del fichero CSV
+    rutaInforme = controlador_herramientas.analisisDeVulnerabilidades(ipList,user,password,rutasCarpetas[0]) #Escribir ruta despues y devolver ruta del fichero CSV
     print("Finalizado el analisis de vulnerabilidades")
-    #rutaInforme = "/home/kali/Desktop/TFG/Ficheros_de_Entrada/Reporte_greenbone.csv"
 
     #Se extrae la informacion del reporte CSV generado por Greenbone
     conjuntoTarget = controlador_extractor.extraerCVS(conjuntoTarget,rutaInforme)
@@ -65,6 +60,7 @@ def main(args: Namespace) -> None:
     #Valoracion del riesgo y generacion de la matriz de riesgos
     conjuntoTarget = controlador_extractor.valoracionRiesgo(conjuntoTarget,rutasCarpetas[4],rutasCarpetas[5])#Retorna el conjuntoTarget modificado con el impacto y severidad actualizado
     print("Finalizada la valoracion de riesgos")
+    
     #Generar informe final en JSON
     generador_informe = Generador_informe()
     generador_informe.generarInforme(conjuntoTarget,rutasCarpetas[3])
