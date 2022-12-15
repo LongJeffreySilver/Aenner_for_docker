@@ -99,7 +99,7 @@ class Controlador_Herramientas:
         #subprocess.run(["chmod", "662", "/var/run/gvmd/gvmd.sock"])
 
         #Carpeta de los scripts
-        proceso = subprocess.run(["find", "/", "-name", "TFG"], capture_output=True,text=True) #FIXME "TFG" es como se llame el proyecto de git
+        proceso = subprocess.run(["find", "/", "-name", "Aenner_for_docker"], capture_output=True,text=True)
         rutaScripst = proceso.stdout.splitlines()
         rutaScripst=rutaScripst[0].strip()
         rutaScripst = rutaScripst +"/Scripts/"
