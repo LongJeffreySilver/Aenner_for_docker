@@ -74,7 +74,7 @@ class Controlador_Ficheros:
     
     def creacionCarpetas(self):
         #Ruta actual
-        proceso = subprocess.run(["find", "/", "-name", "TFG"], capture_output=True,text=True) #FIXME "TFG" es como se llame el proyecto de git
+        proceso = subprocess.run(["find", "/", "-name", "Aenner_for_docker"], capture_output=True,text=True)
         rutaApp = proceso.stdout.splitlines()
         rutaApp=rutaApp[0].strip()
 

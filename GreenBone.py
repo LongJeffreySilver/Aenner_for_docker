@@ -1,4 +1,5 @@
 import time, requests,re
+from datetime import datetime
 class GreenBone:
 
     def launch(self,ipList,carpetaEntrada,user,password):
@@ -25,10 +26,13 @@ class GreenBone:
         token = aux[7:-8]
 
         ########################### CREATE TARGET ##############################
-
+        
+        # current datetime
+        now = datetime.now()
+        current_date = now.date()
         targetList = ",".join(ipList) #FIXME Aqui hay target solo, hay que tener la lista de IPs
-        timeLaunch = {time.strftime('%Y/%m/%d-%H:%M')}
-        targetName = f"Automatic_target_list_{timeLaunch}"
+        #timeLaunch = {time.strftime('%Y/%m/%d-%H:%M')}
+        targetName = f"Automatic_target_list_{current_date}"
 
         cookies = {
             'GSAD_SID': cookieGSAD_SID,
@@ -56,7 +60,7 @@ class GreenBone:
 
         ########################### CREATE TASK ##############################
 
-        taskName = f"Automatic_task{timeLaunch}"
+        taskName = f"Automatic_task{current_date}"
 
         headers = {
             'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:107.0) Gecko/20100101 Firefox/107.0',

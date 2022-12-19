@@ -47,7 +47,7 @@ def main(args: Namespace) -> None:
         sys.exit()
 
     #Create a new list with IPs for Greenbone
-    ipList = controlador_ficheros.toListTarget(conjuntoTarget,rutasCarpetas[1])# Fichero con la lista de IPs actual para Greenbone
+    ipList = controlador_ficheros.toListTarget(conjuntoTarget)# Fichero con la lista de IPs actual para Greenbone
 
     user = args[1] 
     password = args[2] 
