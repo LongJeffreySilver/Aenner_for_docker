@@ -55,9 +55,13 @@ class Valorador_riesgo:
         if len(registrosVulnerabilidades) != 0: #FIXME Hay un problema real en los grep y es que puede cumplirse que coincida la mac, pero la misma vulnerabilidad este en otro dispositivo y no en el que ha salido
             for rutaFichero in registrosVulnerabilidades:  #Recorrer los registros vulnerabilidades de los ultimos 20 dias
                 fichero = open(rutaFichero,"r")
+
+                # FIXME para arreglar el bug de arriba, se hace el grep con la MAC, si devuelve algo que no es un null, se coge lo de detras del ";" que es
+                # el numero de lineas siguientes que se puede sacar de nuevo con un grep -A numLineas y ahi comprobar la vulnerabilidad
                 procesoGrepMac = subprocess.run(['grep', vulnerabilidad.hostname, rutaFichero],capture_output=True).returncode == 0 #0 si existe, !=0 si no
                 #SI grep con la MAC == ok ENTONCES
                 if procesoGrepMac == True:
+
                     vul = vulnerabilidad.nombreVulnerabiliad + ";" + vulnerabilidad.protocoloYpuerto
                     #Grep nombre vulnerabilidad + ; + protocoloYpuerto
                     procesoGrepVul = subprocess.run(['grep', vul, rutaFichero],capture_output=True).returncode == 0 #0 si existe, !=0 si no
