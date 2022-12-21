@@ -52,22 +52,23 @@ class Valorador_riesgo:
         procesoFind = subprocess.run(["find", rutaRegistros, "-type", "f", "-ctime" ,"-20"], capture_output=True,text=True) #Saca los registros de vulnerabilidades de los ultimos 20 dias
         registrosVulnerabilidades = procesoFind.stdout.splitlines()
         contador_vulnerabilidad = 0
-        if len(registrosVulnerabilidades) != 0: #FIXME Hay un problema real en los grep y es que puede cumplirse que coincida la mac, pero la misma vulnerabilidad este en otro dispositivo y no en el que ha salido
+
+        if len(registrosVulnerabilidades) != 0: 
             for rutaFichero in registrosVulnerabilidades:  #Recorrer los registros vulnerabilidades de los ultimos 20 dias
                 fichero = open(rutaFichero,"r")
-
-                # FIXME para arreglar el bug de arriba, se hace el grep con la MAC, si devuelve algo que no es un null, se coge lo de detras del ";" que es
-                # el numero de lineas siguientes que se puede sacar de nuevo con un grep -A numLineas y ahi comprobar la vulnerabilidad
-                procesoGrepMac = subprocess.run(['grep', vulnerabilidad.hostname, rutaFichero],capture_output=True).returncode == 0 #0 si existe, !=0 si no
-                #SI grep con la MAC == ok ENTONCES
-                if procesoGrepMac == True:
-
-                    vul = vulnerabilidad.nombreVulnerabiliad + ";" + vulnerabilidad.protocoloYpuerto
-                    #Grep nombre vulnerabilidad + ; + protocoloYpuerto
-                    procesoGrepVul = subprocess.run(['grep', vul, rutaFichero],capture_output=True).returncode == 0 #0 si existe, !=0 si no
-                    if procesoGrepVul == True: #Hay repeticion de vulnerabilidad
-                        contador_vulnerabilidad+=1
-                fichero.close()
+                procesoGrepMac = subprocess.run(['grep', vulnerabilidad.hostname, rutaFichero],capture_output=True,text=True)
+                hayMac= procesoGrepMac.stdout.splitlines()
+                
+                if len(hayMac) is not 0:
+                    hayMacPartido = hayMac[0].split(';')
+                    repeticion = hayMacPartido[1]
+                    procesoGrepMac = subprocess.run(['grep', vulnerabilidad.hostname, "-A", repeticion, rutaFichero],capture_output=True,text=True)
+                    lineasVuln= procesoGrepMac.stdout.splitlines()
+                    for vulnerability in lineasVuln:
+                        vul = vulnerabilidad.nombreVulnerabiliad + ";" + vulnerabilidad.protocoloYpuerto
+                        if vul == vulnerability:
+                            contador_vulnerabilidad+=1
+            fichero.close()
 
         return contador_vulnerabilidad
 
