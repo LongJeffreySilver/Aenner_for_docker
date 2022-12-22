@@ -68,7 +68,7 @@ class Valorador_riesgo:
                         vul = vulnerabilidad.nombreVulnerabiliad + ";" + vulnerabilidad.protocoloYpuerto
                         if vul == vulnerability:
                             contador_vulnerabilidad+=1
-            fichero.close()
+                fichero.close()
 
         return contador_vulnerabilidad
 
