@@ -1,5 +1,6 @@
 # libraries
 from datetime import datetime
+import math
 import re
 import subprocess
 import matplotlib.pyplot as plt
@@ -46,7 +47,6 @@ class General_Chart:
 
 
         ####################### Chart #######################
-
         ylow = list()
         ymedium = list()
         yhigh = list()
@@ -69,6 +69,14 @@ class General_Chart:
 
         plt.plot(xDays, ycritic, color='red', linestyle='dashed', linewidth = 3, marker='o', markerfacecolor='magenta', markersize=12, label = 'Critic')
         
+        #Change axis x and y from decimal to integer
+        elemMax = max(fileList)
+        maximo = max(elemMax)
+        xInteger = range(1, math.ceil(max(xDays))+1)
+        plt.xticks(xInteger)
+        yInteger = range(0, maximo+1)
+        plt.yticks(yInteger)
+
         # naming the x axis
         plt.xlabel('Days')
         # naming the y axis
