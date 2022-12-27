@@ -47,50 +47,28 @@ class General_Chart:
 
         ####################### Chart #######################
 
-        xlow = list()
         ylow = list()
-        contador = 0
+        ymedium = list()
+        yhigh = list()
+        ycritic = list()
+        xDays = list()
+        contador = 1
         for fichero in fileList:
             ylow.append(fichero[0])
-            xlow.append(contador)
-            contador = contador + 1
-
-        # plotting the line 1 points
-        plt.plot(xlow, ylow, color='blue', linestyle='dashed', linewidth = 3, marker='o', markerfacecolor='cyan', markersize=12, label = 'Low')
-
-        xmedium = list()
-        ymedium = list()
-        contador = 0
-        for fichero in fileList:
             ymedium.append(fichero[1])
-            xmedium.append(contador)
-            contador = contador + 1
-
-        # plotting the line 2 points
-        plt.plot(xmedium, ymedium, color='yellow', linestyle='dashed', linewidth = 3, marker='o', markerfacecolor='black', markersize=12, label = 'Medium')
-
-        xhigh = list()
-        yhigh = list()
-        contador = 0
-        for fichero in fileList:
             yhigh.append(fichero[2])
-            xhigh.append(contador)
-            contador = contador + 1
-
-        # plotting the line 3 points
-        plt.plot(xhigh, yhigh, color='brown', linestyle='dashed', linewidth = 3, marker='o', markerfacecolor='white', markersize=12, label = 'High')
-
-        xcritic = list()
-        ycritic = list()
-        contador = 0
-        for fichero in fileList:
             ycritic.append(fichero[3])
-            xcritic.append(contador)
+            xDays.append(contador)
             contador = contador + 1
 
-        # plotting the line 4 points
-        plt.plot(xcritic, ycritic, color='red', linestyle='dashed', linewidth = 3, marker='o', markerfacecolor='magenta', markersize=12, label = 'Critic')
+        plt.plot(xDays, ylow, color='blue', linestyle='dashed', linewidth = 3, marker='o', markerfacecolor='cyan', markersize=12, label = 'Low')
 
+        plt.plot(xDays, ymedium, color='yellow', linestyle='dashed', linewidth = 3, marker='o', markerfacecolor='black', markersize=12, label = 'Medium')
+
+        plt.plot(xDays, yhigh, color='brown', linestyle='dashed', linewidth = 3, marker='o', markerfacecolor='white', markersize=12, label = 'High')
+
+        plt.plot(xDays, ycritic, color='red', linestyle='dashed', linewidth = 3, marker='o', markerfacecolor='magenta', markersize=12, label = 'Critic')
+        
         # naming the x axis
         plt.xlabel('Days')
         # naming the y axis
