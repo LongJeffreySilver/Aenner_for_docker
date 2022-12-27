@@ -67,7 +67,7 @@ def main(args: Namespace) -> None:
     generador_informe.generarInforme(conjuntoTarget,rutasCarpetas[3])
     controlador_ficheros.crearRegistroRiesgos(rutasCarpetas[5],conjuntoTarget)
     general_Chart = General_Chart()
-    general_Chart.generateChart(rutasCarpetas[3])
+    general_Chart.generateChart(rutasCarpetas[5], rutasCarpetas[3])
     print("Informe creado con exito")
 
 #Generar el main

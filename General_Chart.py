@@ -5,7 +5,7 @@ import subprocess
 import matplotlib.pyplot as plt
 
 class General_Chart:
-    def generateChart(self, rutaRegistros):
+    def generateChart(self, rutaRegistros, rutaInformeActual):
         rutaRegistros = rutaRegistros + "/"
         procesoFind = subprocess.run(["find", rutaRegistros, "-type", "f", "-ctime" ,"-20"], capture_output=True,text=True) #Saca los registros de vulnerabilidades de los ultimos 20 dias
         registrosVulnerabilidades = procesoFind.stdout.splitlines()
@@ -105,4 +105,4 @@ class General_Chart:
         now = datetime.now()
         current_date = now.date()
         name = f"General_chart_{current_date}"
-        plt.savefig(rutaRegistros + "/" + name + ".png")
+        plt.savefig(rutaInformeActual + "/" + name + ".png")
