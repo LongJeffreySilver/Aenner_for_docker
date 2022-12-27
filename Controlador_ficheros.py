@@ -102,7 +102,6 @@ class Controlador_Ficheros:
         return listaCreacion
 
     def crearRegistroRiesgos(self,ruta,conjuntoTarget):
-
         nombreFichero = ruta + "/" + f"Registro_riesgos_{time.strftime('%d.%m.%Y-%H:%M:%S')}.txt"
         ficheroVulnerabilidades = open(nombreFichero,'w')
         for target in conjuntoTarget:
@@ -113,7 +112,8 @@ class Controlador_Ficheros:
                 for vulnerabilidad in target.listaVulnerabilidades:
                     nombre = vulnerabilidad.nombreVulnerabiliad
                     protocoloYpuerto = vulnerabilidad.protocoloYpuerto
-                    restoLineas = nombre + ";" + protocoloYpuerto + "\n"
+                    severidad = vulnerabilidad.severidad
+                    restoLineas = nombre + ";" + protocoloYpuerto + ";" + severidad + "\n"
                     ficheroVulnerabilidades.write(restoLineas)
 
         ficheroVulnerabilidades.close()

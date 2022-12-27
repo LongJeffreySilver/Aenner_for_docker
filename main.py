@@ -3,6 +3,7 @@ from Controlador_ficheros import Controlador_Ficheros
 from Generador_informe import Generador_informe
 from  Controlador_extractor import Controlador_extractor
 from Controlador_Herramientas import Controlador_Herramientas
+from General_Chart import General_Chart
 from argparse import Namespace
 import sys
 
@@ -61,10 +62,12 @@ def main(args: Namespace) -> None:
     conjuntoTarget = controlador_extractor.valoracionRiesgo(conjuntoTarget,rutasCarpetas[4],rutasCarpetas[5])#Retorna el conjuntoTarget modificado con el impacto y severidad actualizado
     print("Finalizada la valoracion de riesgos")
     
-    #Generar informe final en JSON
+    #Generar informe final en JSON y el grafico general
     generador_informe = Generador_informe()
     generador_informe.generarInforme(conjuntoTarget,rutasCarpetas[3])
     controlador_ficheros.crearRegistroRiesgos(rutasCarpetas[5],conjuntoTarget)
+    general_Chart = General_Chart()
+    general_Chart.generateChart(rutasCarpetas[3])
     print("Informe creado con exito")
 
 #Generar el main

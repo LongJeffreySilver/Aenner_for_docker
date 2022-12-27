@@ -65,7 +65,7 @@ class Valorador_riesgo:
                     procesoGrepMac = subprocess.run(['grep', vulnerabilidad.hostname, "-A", repeticion, rutaFichero],capture_output=True,text=True)
                     lineasVuln= procesoGrepMac.stdout.splitlines()
                     for vulnerability in lineasVuln:
-                        vul = vulnerabilidad.nombreVulnerabiliad + ";" + vulnerabilidad.protocoloYpuerto
+                        vul = vulnerabilidad.nombreVulnerabiliad + ";" + vulnerabilidad.protocoloYpuerto + ";" + vulnerabilidad.severidad
                         if vul == vulnerability:
                             contador_vulnerabilidad+=1
                 fichero.close()
