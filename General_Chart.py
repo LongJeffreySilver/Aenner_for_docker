@@ -18,7 +18,7 @@ class General_Chart:
                 listaSeveridad = [0,0,0,0] #low[0], medium[1], high[2] y critic[3]
                 for lineaFichero in fichero:
                     #00:00:00:00:00:04;5
-                    mac = re.match('[0-9][0-9]:[0-9][0-9]:[0-9][0-9]:[0-9][0-9]:[0-9][0-9]:[0-9][0-9];[0-9]+', lineaFichero)
+                    mac = re.match('[A-Z0-9][A-Z0-9]:[A-Z0-9][A-Z0-9]:[A-Z0-9][A-Z0-9]:[A-Z0-9][A-Z0-9]:[A-Z0-9][A-Z0-9]:[A-Z0-9][A-Z0-9];[A-Z0-9]+', lineaFichero)
                     hayMac = bool(mac)
 
                     if hayMac == False:

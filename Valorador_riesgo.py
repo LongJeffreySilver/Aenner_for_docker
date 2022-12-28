@@ -59,7 +59,7 @@ class Valorador_riesgo:
                 procesoGrepMac = subprocess.run(['grep', vulnerabilidad.hostname, rutaFichero],capture_output=True,text=True)
                 hayMac= procesoGrepMac.stdout.splitlines()
                 
-                if len(hayMac) is not 0:
+                if len(hayMac) != 0:
                     hayMacPartido = hayMac[0].split(';')
                     repeticion = hayMacPartido[1]
                     procesoGrepMac = subprocess.run(['grep', vulnerabilidad.hostname, "-A", repeticion, rutaFichero],capture_output=True,text=True)
