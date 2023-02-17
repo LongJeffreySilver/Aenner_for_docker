@@ -46,20 +46,21 @@ class Extractor_ettercap:
                 ipCortada = aux[0]
                 version = aux[1]
                 repeticion = 0
-                #Parte comun para las IPs
-                if ipCortada in listaIPPrivadas: #Si los dos valores son de IP privada
-                    #Hay que comprobar si esta ya esa mac en el conjunto de targets
-                    if len(conjuntoTarget) == 0:
-                            target = Target(ip,mac,version)
-                            conjuntoTarget.add(target)    
-                    else:     
-                        for elemento in conjuntoTarget:
-                            if not elemento.mac == mac:
-                                repeticion = repeticion + 1
-                            if repeticion == len(conjuntoTarget): #Si es igual el numero es porque no hay ningun elemento con la misma MAC
+                if version == "4":
+                    #Parte comun para las IPs
+                    if ipCortada in listaIPPrivadas: #Si los dos valores son de IP privada
+                        #Hay que comprobar si esta ya esa mac en el conjunto de targets
+                        if len(conjuntoTarget) == 0:
                                 target = Target(ip,mac,version)
-                                conjuntoTarget.add(target)
-                                break    #Para no modificar el tamaño del bucle en plena iteracion y optimizar el bucle
+                                conjuntoTarget.add(target)    
+                        else:     
+                            for elemento in conjuntoTarget:
+                                if not elemento.mac == mac:
+                                    repeticion = repeticion + 1
+                                if repeticion == len(conjuntoTarget): #Si es igual el numero es porque no hay ningun elemento con la misma MAC
+                                    target = Target(ip,mac,version)
+                                    conjuntoTarget.add(target)
+                                    break    #Para no modificar el tamaño del bucle en plena iteracion y optimizar el bucle
 
             if linea == "Hosts list:\n":
                 condicionHostList = 1
