@@ -33,7 +33,7 @@ class Controlador_Herramientas:
         if interfaz != "-1":
             rutaFichero = rutaFicherosEntrada + "/Entrada_ettercap.txt"
             fichero = open(rutaFichero,"w")
-            proceso = subprocess.Popen(["ettercap", "-Tqz", "-s", "'s(300)lqq'", "-i", interfaz], stdout=fichero) #Se registran datos durante 5 minutos (300 segundos)
+            proceso = subprocess.Popen(["ettercap", "-Tqz", "-s", "'s(600)lqq'", "-i", interfaz], stdout=fichero) #Se registran datos durante 10 minutos (600 segundos)
             proceso.communicate()
             fichero.close()
             return rutaFichero
