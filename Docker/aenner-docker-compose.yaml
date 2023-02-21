@@ -1,0 +1,17 @@
+#Command to launch: sudo docker-compose -f aenner-docker-compose.yaml up &
+#sudo docker container ls
+#sudo docker exec -it IDCONTENEDOR bash -> intentar que abra un terminal con usuario kali
+version: '3.7'
+services:
+    aenner:
+        restart: always
+        image: jeffreysilver/aenner-backup:latest
+        hostname: aenner
+        network_mode: "host"
+        stdin_open: true
+        tty: true
+        command: "/sbin/init"
+        privileged: true
+volumes:
+    volumeAenner:
+      driver: local
