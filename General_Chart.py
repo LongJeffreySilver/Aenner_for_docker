@@ -67,7 +67,7 @@ class General_Chart:
 
         plt.plot(xDays, yhigh, color='brown', linestyle='dashed', linewidth = 3, marker='o', markerfacecolor='white', markersize=12, label = 'High')
 
-        plt.plot(xDays, ycritic, color='red', linestyle='dashed', linewidth = 3, marker='o', markerfacecolor='magenta', markersize=12, label = 'Critic')
+        plt.plot(xDays, ycritic, color='red', linestyle='dashed', linewidth = 3, marker='o', markerfacecolor='magenta', markersize=12, label = 'Critical')
         
         #Change axis x and y from decimal to integer
         elemMax = max(fileList)

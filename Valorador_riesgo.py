@@ -18,10 +18,10 @@ class Valorador_riesgo:
         return "red"
 
     switchSeveridad = {
-        "bajo": azul,
-        "medio": amarillo,
-        "alto": marron,
-        "critico": rojo,
+        "Low": azul,
+        "Medium": amarillo,
+        "High": marron,
+        "Critical": rojo,
     }
 
     def aplicarFormula(self,rutaRegistros, vulnerabilidad):
@@ -72,29 +72,29 @@ class Valorador_riesgo:
 
         return contador_vulnerabilidad
 
-    def revaluarSeveridad(self, valorVulneravilidad): #Estas valoraciones limite estan puestas a ojo sin ningun criterio
+    def revaluarSeveridad(self, valorVulneravilidad):
         if valorVulneravilidad < 5.0:
-            return "bajo"
+            return "Low"
         elif valorVulneravilidad < 7.0:
-            return "medio"
+            return "Medium"
         elif valorVulneravilidad < 9.0:
-            return "alto"
+            return "High"
         else:
-            return "critico"
+            return "Critical"
 
     def dibujarMatriz(self,matrizX,matrizY, mac, ip,severidad,rutaMatrizRiesgos):
             plot.ylim(0,10) #El eje Y es el unico fijo
             for i in range(0,len(matrizX),1):
                 plot.scatter(matrizX[i],matrizY[i],marker="o",color=self.switchSeveridad.get(severidad[i])()) #cada vulnerabilidad se pinta segun su severidad
-            plot.xlabel("Numero de riesgo")
-            plot.ylabel("Rango de 0 a 10")
-            plot.title("Dispositivo: " + mac + ";" + ip)
+            plot.xlabel("Number of the risk")
+            plot.ylabel("Range 0 to 10")
+            plot.title("Device: " + mac + ";" + ip)
             
             #Incluir leyenda
-            leyendaAzul = mpatches.Patch(color="blue",label="Bajo")
-            leyendaAmarillo = mpatches.Patch(color="yellow",label="Medio")
-            leyendaMarron = mpatches.Patch(color="brown",label="Alto")
-            leyendaRoja = mpatches.Patch(color="red",label="Critico")
+            leyendaAzul = mpatches.Patch(color="blue",label="Low")
+            leyendaAmarillo = mpatches.Patch(color="yellow",label="Medium")
+            leyendaMarron = mpatches.Patch(color="brown",label="High")
+            leyendaRoja = mpatches.Patch(color="red",label="Critical")
 
             plot.legend(handles=[leyendaAzul,leyendaAmarillo,leyendaMarron,leyendaRoja],loc="best") #Se coloca automaticamente en la mejor posicion sin cortar los datos
             plot.savefig(rutaMatrizRiesgos + "/Matriz de riesgos: " + mac + ";" + ip + ".png")
