@@ -3,6 +3,8 @@ from datetime import datetime
 class GreenBone:
 
     def launch(self,ipList,carpetaEntrada,user,password):
+
+        ########################### Login ##############################
         sesion = requests.Session()
         headers = {
             'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0',
@@ -106,7 +108,7 @@ class GreenBone:
         done = 0
 
         while done == 0:
-            time.sleep(240) #4 minutos #puedo hacer el tiempo variable en funcion del porcentaje de completado que lleve el analisis
+            time.sleep(60) #1 minuto #puedo hacer el tiempo variable en funcion del porcentaje de completado que lleve el analisis
             headers = {
                 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0',
                 'Accept': '*/*',
@@ -126,8 +128,35 @@ class GreenBone:
 
             getStatus = requests.get('http://localhost:9392/gmp', params=params, cookies=cookies, headers=headers)
 
+            try:
+                aux = re.findall('<status>.*</status>', getStatus.text)[0]
+            except IndexError:
+                    ########################### Login ##############################
+                    sesion = requests.Session()
+                    headers = {
+                        'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0',
+                        'Accept': '*/*',
+                        'Accept-Language': 'es-ES,es;q=0.8,en-US;q=0.5,en;q=0.3',
+                        'Content-Type': 'multipart/form-data; boundary=---------------------------301933276242805150541672282389',
+                        'Origin': 'http://localhost:9392',
+                        'Connection': 'keep-alive',
+                        'Referer': 'http://localhost:9392/login',
+                        'Sec-Fetch-Dest': 'empty',
+                        'Sec-Fetch-Mode': 'cors',
+                        'Sec-Fetch-Site': 'same-origin',
+                    }
+                    data = '-----------------------------301933276242805150541672282389\r\nContent-Disposition: form-data; name="cmd"\r\n\r\nlogin\r\n-----------------------------301933276242805150541672282389\r\nContent-Disposition: form-data; name="login"\r\n\r\n' + user + '\r\n-----------------------------301933276242805150541672282389\r\nContent-Disposition: form-data; name="password"\r\n\r\n' + password + '\r\n-----------------------------301933276242805150541672282389--\r\n'
 
-            aux = re.findall('<status>.*</status>', getStatus.text)[0]
+                    login = sesion.post('http://localhost:9392/gmp', headers=headers, data=data)
+                    cookieGSAD_SID = login.cookies.values()[0]
+
+                    aux = re.findall('<token>.*</token>', login.text)[0]
+                    token = aux[7:-8]
+                    cookies = {
+                        'GSAD_SID': cookieGSAD_SID,
+                    }
+                    continue
+            
             status = aux[8:-9]
 
             if status == "Done":

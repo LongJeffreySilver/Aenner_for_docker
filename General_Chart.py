@@ -26,19 +26,19 @@ class General_Chart:
                         lineaPartida = lineaFichero.split(';')
                         severity = lineaPartida[2]
 
-                        if severity == "bajo\n":
+                        if severity == "Low\n":
                             valor = listaSeveridad[0]
                             valor = valor +1
                             listaSeveridad[0] = valor
-                        elif severity == "medio\n":
+                        elif severity == "Medium\n":
                             valor = listaSeveridad[1]
                             valor = valor +1
                             listaSeveridad[1] = valor
-                        elif severity == "alto\n":
+                        elif severity == "High\n":
                             valor = listaSeveridad[2]
                             valor = valor +1
                             listaSeveridad[2] = valor
-                        elif severity == "critico\n":
+                        elif severity == "Critical\n":
                             valor = listaSeveridad[3]
                             valor = valor +1
                             listaSeveridad[3] = valor
