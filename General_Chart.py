@@ -81,7 +81,7 @@ class General_Chart:
         # naming the x axis
         plt.xlabel('Days')
         # naming the y axis
-        plt.ylabel('Num.Vulnerabilities')
+        plt.ylabel('Risk number')
         # giving a title to my graph
         plt.title('Chart of the last 20 days')
 
