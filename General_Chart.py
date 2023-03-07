@@ -74,8 +74,9 @@ class General_Chart:
         maximo = max(elemMax)
         xInteger = range(1, math.ceil(max(xDays))+1)
         plt.xticks(xInteger)
-        yInteger = range(0, maximo+1)
-        plt.yticks(yInteger)
+        
+        yInteger = maximo + 1
+        plt.ylim([0, yInteger])
 
         # naming the x axis
         plt.xlabel('Days')
