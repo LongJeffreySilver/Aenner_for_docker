@@ -61,13 +61,13 @@ class General_Chart:
             xDays.append(contador)
             contador = contador + 1
 
-        plt.plot(xDays, ylow, color='blue', linestyle='dashed', linewidth = 3, marker='o', markerfacecolor='cyan', markersize=12, label = 'Low')
+        plt.plot(xDays, ylow, color='blue', linestyle='dashed', linewidth = 2, marker='o', markerfacecolor='cyan', markersize=8, label = 'Low')
 
-        plt.plot(xDays, ymedium, color='yellow', linestyle='dashed', linewidth = 3, marker='o', markerfacecolor='black', markersize=12, label = 'Medium')
+        plt.plot(xDays, ymedium, color='yellow', linestyle='dashed', linewidth = 2, marker='o', markerfacecolor='black', markersize=8, label = 'Medium')
 
-        plt.plot(xDays, yhigh, color='brown', linestyle='dashed', linewidth = 3, marker='o', markerfacecolor='white', markersize=12, label = 'High')
+        plt.plot(xDays, yhigh, color='brown', linestyle='dashed', linewidth = 2, marker='o', markerfacecolor='white', markersize=8, label = 'High')
 
-        plt.plot(xDays, ycritic, color='red', linestyle='dashed', linewidth = 3, marker='o', markerfacecolor='magenta', markersize=12, label = 'Critical')
+        plt.plot(xDays, ycritic, color='red', linestyle='dashed', linewidth = 2, marker='o', markerfacecolor='magenta', markersize=8, label = 'Critical')
         
         #Change axis x and y from decimal to integer
         elemMax = max(fileList)
