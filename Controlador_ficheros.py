@@ -102,7 +102,7 @@ class Controlador_Ficheros:
         return listaCreacion
 
     def crearRegistroRiesgos(self,ruta,conjuntoTarget):
-        nombreFichero = ruta + "/" + f"Registro_riesgos_{time.strftime('%d.%m.%Y-%H:%M:%S')}.txt"
+        nombreFichero = ruta + "/" + f"Registro_riesgos_{time.strftime('%m.%d.%Y-%H:%M:%S')}.txt"
         ficheroVulnerabilidades = open(nombreFichero,'w')
         for target in conjuntoTarget:
             if len(target.listaVulnerabilidades) > 0:
