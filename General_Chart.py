@@ -10,6 +10,7 @@ class General_Chart:
         rutaRegistros = rutaRegistros + "/"
         procesoFind = subprocess.run(["find", rutaRegistros, "-type", "f", "-ctime" ,"-20"], capture_output=True,text=True) #Saca los registros de vulnerabilidades de los ultimos 20 dias
         registrosVulnerabilidades = procesoFind.stdout.splitlines()
+        registrosVulnerabilidades.sort()
 
         fileList= list()
         if len(registrosVulnerabilidades) != 0: 
