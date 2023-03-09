@@ -82,7 +82,7 @@ class Controlador_Ficheros:
         dirEntrada = rutaApp + "/Ficheros_de_Entrada"
         dirSalida = rutaApp + "/Ficheros_de_Salida"
         dirInformes = rutaApp + "/Informes"
-        dirInformeActual = dirInformes + "/Informe_"+ f"{time.strftime('%d.%m.%Y-%H:%M:%S')}"
+        dirInformeActual = dirInformes + "/Informe_"+ f"{time.strftime('%m.%d.%Y-%H:%M:%S')}"
         dirMatricesRiesgos = dirInformeActual + "/Matrices_de_riesgos"
         dirRegistroRiesgos = rutaApp + "/Registro_Riesgos"
 
