@@ -49,9 +49,10 @@ class Valorador_riesgo:
 
     def consultarRegistroRiesgos(self,rutaRegistros,vulnerabilidad):
         rutaRegistros = rutaRegistros + "/"
-        procesoFind = subprocess.run(["find", rutaRegistros, "-type", "f", "-ctime" ,"-20"], capture_output=True,text=True) #Saca los registros de vulnerabilidades de los ultimos 20 dias
-        registrosVulnerabilidades = procesoFind.stdout.splitlines()
-        registrosVulnerabilidades.sort()
+        procesoFind = subprocess.Popen(["find", rutaRegistros, "-type", "f", "-ctime" ,"-20"], stdout=subprocess.PIPE) #Saca los registros de vulnerabilidades de los ultimos 20 dias
+        procesoSort = subprocess.Popen("sort", stdin=procesoFind.stdout, stdout=subprocess.PIPE) 
+        procesoTail = subprocess.run(["tail","-20"], stdin=procesoSort.stdout, capture_output=True,text=True)
+        registrosVulnerabilidades = procesoTail.stdout.splitlines()
         contador_vulnerabilidad = 0
 
         if len(registrosVulnerabilidades) != 0: 
